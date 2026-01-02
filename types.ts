@@ -10,6 +10,12 @@ export enum EmotionalTone {
   CYBERPUNK = 'Cyberpunk'
 }
 
+export enum PrimaryMode {
+  DISABLED = 'Disabled',
+  ENABLED = 'Enabled',
+  AUTO = 'Auto'
+}
+
 export interface ImageAdjustments {
   brightness: number;
   contrast: number;
@@ -19,8 +25,16 @@ export interface ImageAdjustments {
   sepia: number;
   invert: boolean;
   grayscale: number;
-  temperature: number; // Simulated
-  vibrancy: number;    // Simulated
+  temperature: number;
+  vibrancy: number;
+  intensity: number;
+}
+
+export interface ThumbnailStrategy {
+  clarity: 'Standard' | 'High' | 'Ultra';
+  contrast: 'Soft' | 'Strong' | 'Aggressive';
+  focus: 'Subject' | 'Text' | 'Background' | 'Balanced';
+  mobile: 'Standard' | 'Optimal' | 'Extreme';
 }
 
 export interface ThumbnailConfig {
@@ -29,11 +43,9 @@ export interface ThumbnailConfig {
   tone: EmotionalTone;
   referenceImage: string | null;
   primaryColor: string;
-  usePrimaryColor: boolean;
+  primaryMode: PrimaryMode;
   adjustments: ImageAdjustments;
-}
-
-export interface GenerationResult {
-  imageUrl: string;
-  timestamp: number;
+  strategy: ThumbnailStrategy;
+  layoutPresetId: string;
+  autoCorrection: boolean;
 }
