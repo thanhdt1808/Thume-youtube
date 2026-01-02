@@ -1,17 +1,32 @@
 
 import React from 'react';
+import { ImageAdjustments } from '../types';
 
 interface ThumbnailPreviewProps {
   imageUrl: string | null;
   isLoading: boolean;
   statusMessage: string;
+  adjustments: ImageAdjustments;
 }
 
-const ThumbnailPreview: React.FC<ThumbnailPreviewProps> = ({ imageUrl, isLoading, statusMessage }) => {
+const ThumbnailPreview: React.FC<ThumbnailPreviewProps> = ({ imageUrl, isLoading, statusMessage, adjustments }) => {
+  const filterStyle = {
+    filter: `
+      brightness(${adjustments.brightness}%) 
+      contrast(${adjustments.contrast}%) 
+      saturate(${adjustments.saturation}%) 
+      blur(${adjustments.blur}px) 
+      hue-rotate(${adjustments.hue}deg) 
+      sepia(${adjustments.sepia}%) 
+      invert(${adjustments.invert ? 1 : 0}) 
+      grayscale(${adjustments.grayscale}%)
+    `.trim()
+  };
+
   return (
     <div className="relative w-full aspect-video bg-slate-800 rounded-xl overflow-hidden border border-slate-700 canvas-shadow">
       {isLoading ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-slate-900/80 backdrop-blur-sm z-10">
+        <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-slate-900/80 backdrop-blur-sm z-50">
           <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-indigo-400 font-medium animate-pulse">{statusMessage}</p>
         </div>
@@ -25,11 +40,18 @@ const ThumbnailPreview: React.FC<ThumbnailPreviewProps> = ({ imageUrl, isLoading
           <span className="text-sm uppercase tracking-widest font-bold">Preview Area</span>
         </div>
       ) : (
-        imageUrl && <img src={imageUrl} alt="Thumbnail Preview" className="w-full h-full object-cover" />
+        imageUrl && (
+          <img 
+            src={imageUrl} 
+            alt="Thumbnail Preview" 
+            className="w-full h-full object-cover transition-all duration-200 ease-in-out" 
+            style={filterStyle}
+          />
+        )
       )}
       
       {/* Mobile Preview Simulation Overlay */}
-      <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-[10px] text-white/80 border border-white/10 uppercase tracking-tighter">
+      <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-[10px] text-white/80 border border-white/10 uppercase tracking-tighter pointer-events-none">
         Mobile Size Check
       </div>
     </div>

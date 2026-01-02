@@ -4,7 +4,23 @@ export enum EmotionalTone {
   SHOCK = 'Shock',
   MYSTERY = 'Mystery',
   HOPE = 'Hope',
-  URGENCY = 'Urgency'
+  URGENCY = 'Urgency',
+  VINTAGE = 'Vintage',
+  MINIMALIST = 'Minimalist',
+  CYBERPUNK = 'Cyberpunk'
+}
+
+export interface ImageAdjustments {
+  brightness: number;
+  contrast: number;
+  saturation: number;
+  blur: number;
+  hue: number;
+  sepia: number;
+  invert: boolean;
+  grayscale: number;
+  temperature: number; // Simulated
+  vibrancy: number;    // Simulated
 }
 
 export interface ThumbnailConfig {
@@ -13,7 +29,8 @@ export interface ThumbnailConfig {
   tone: EmotionalTone;
   referenceImage: string | null;
   primaryColor: string;
-  secondaryColor: string;
+  usePrimaryColor: boolean;
+  adjustments: ImageAdjustments;
 }
 
 export interface GenerationResult {
