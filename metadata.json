@@ -1,0 +1,7 @@
+{
+  "name": "ThumbCraft Pro",
+  "description": "Professional YouTube Thumbnail Designer powered by Gemini AI to recreate and optimize eye-catching thumbnails with custom text and subjects.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
